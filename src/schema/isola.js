@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+const date = new Date();
+
+//Membuat Skema baru
 const isolaSchema = new mongoose.Schema({
     lokasi: String,
     masuk: Date,
@@ -14,23 +17,28 @@ isolaSchema.methods.show = function show() {
     console.log(greeting);
   };
 
+//membuat model baru
 const isolaNew = mongoose.model('isolaNew', isolaSchema);
 
-
-const isola = new isolaNew({
-    lokasi: 'Baciro Selatan',
-    masuk: "22/02/2022",
-    keluar: "31/03/2022",
+/* 
+ const isola = new Isola({
+    masuk: date,
+    keluar: date,
     status: 'Selesai Isolasi',
  });
-isola.show(); // "Meow name is fluffy"
+isola.show(); // Show Entry
+*/
 
 main().catch(err => console.log(err));
 
 async function main() {
     await mongoose.connect('mongodb://localhost:27017/test');
+    /*
     const showData = await isolaNew.find();
     await isolaNew.find({ name: /^isola/ });
     await isola.save();
     console.log(showData);
+    */
 }
+
+module.exports = isolaNew;
