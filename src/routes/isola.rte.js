@@ -30,34 +30,22 @@ const isola = new Isola({
   });
   await isola.save()
   res.send('Successfully adding isolation case');
-  //res.json(data);
 })
 
 router.put('/isola/:id', async function (req, res) {
-  console.log(req.params)
   const isolaId = req.params.id
-  console.log(isolaId)
   const isola = await Isola.findOne({ _id: isolaId })
+  console.log(isolaId)
   if(!isola) return res.sendStatus(404)
-
-  const isola = new Isola({
-    lokasi: lokasi,
-    masuk: masuk,
-    keluar: keluar,
-    status: status
-  });
-  await isola.save()
+  if(isola.lokasi !== req.body.lokasi) isola.lokasi = req.body.lokasi
+  if(isola.masuk !== req.body.masuk) isola.masuk = req.body.masuk
+  if(isola.keluar !== req.body.keluar) isola.keluar = req.body.keluar
+  if(isola.status !== req.body.status) isola.status = req.body.status
+  const updateIsola = await Isola.findOneAndUpdate({_id: isolaId}, isola)
   res.send('Successfully update isolation case');
 })
 
 
-/**
- *  1. Get the id of the entry that the front end wants to update
-    2. Find the entry in the database, given the id
-    3. Get the value of what the front end wants the entry to be updated to
-    4. Update the entry with that value
-    We’ve done similar things to 1 and 2 in DELETE route, and 3 in POST route.
- */
 
 router.delete('/isola/:id', async function (req, res) {
   const isolaId = req.params.id
